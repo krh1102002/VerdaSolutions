@@ -1,57 +1,158 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Microscope, Target, FileText, Database, Shield, Users, CheckCircle, Activity } from 'lucide-react';
 
 const Services = () => {
+  const [activeTab, setActiveTab] = useState('clinical-trial');
+
   const fadeInUp = {
     initial: { opacity: 0, y: 60 },
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.6 }
   };
 
-  const waveAnimation = {
-    initial: { opacity: 0, x: -100 },
-    animate: { opacity: 1, x: 0 },
-    transition: { duration: 0.8, ease: "easeOut" }
+  const services = [
+    {
+      id: 'clinical-trial',
+      title: 'Clinical Trial Management',
+      icon: Microscope,
+      description: 'End-to-end management of Phase I-IV clinical trials with expert oversight and quality assurance.',
+      color: 'blue',
+      details: [
+        'Phase I–IV Trial Execution',
+        'Site Selection & Monitoring',
+        'Patient Recruitment & Retention',
+        'Clinical Data Collection',
+        'Trial Coordination & Management',
+        'Quality Assurance & Control'
+      ]
+    },
+    {
+      id: 'regulatory',
+      title: 'Regulatory Affairs',
+      icon: FileText,
+      description: 'Navigate complex regulatory landscapes with our expert guidance and submission support.',
+      color: 'green',
+      details: [
+        'Regulatory Strategy Development',
+        'IND/CTA Submissions',
+        'FDA/EMA Interactions',
+        'Regulatory Compliance',
+        'Post-Market Surveillance',
+        'Global Registration Support'
+      ]
+    },
+    {
+      id: 'data-management',
+      title: 'Data Management',
+      icon: Database,
+      description: 'Comprehensive data management and biostatistics services ensuring data integrity and compliance.',
+      color: 'purple',
+      details: [
+        'Clinical Data Management',
+        'Database Design & Validation',
+        'Statistical Analysis Planning',
+        'Biostatistics & Programming',
+        'Data Quality Assurance',
+        'CDISC Standards Compliance'
+      ]
+    },
+    {
+      id: 'pharmacovigilance',
+      title: 'Pharmacovigilance',
+      icon: Shield,
+      description: 'Comprehensive safety monitoring and adverse event reporting throughout the clinical development process.',
+      color: 'red',
+      details: [
+        'Safety Database Management',
+        'Adverse Event Reporting',
+        'Signal Detection & Analysis',
+        'Risk Management Planning',
+        'Periodic Safety Updates',
+        'Global Safety Compliance'
+      ]
+    },
+    {
+      id: 'medical-writing',
+      title: 'Medical Writing',
+      icon: FileText,
+      description: 'Expert medical writing services for protocols, reports, and regulatory submissions.',
+      color: 'indigo',
+      details: [
+        'Protocol Development',
+        'Clinical Study Reports',
+        'Regulatory Submissions',
+        'Scientific Publications',
+        'Investigator Brochures',
+        'Patient Information Materials'
+      ]
+    },
+    {
+      id: 'project-management',
+      title: 'Project Management',
+      icon: Target,
+      description: 'Comprehensive project management ensuring timely delivery and quality outcomes.',
+      color: 'orange',
+      details: [
+        'Project Planning & Strategy',
+        'Timeline Management',
+        'Resource Allocation',
+        'Risk Assessment & Mitigation',
+        'Stakeholder Communication',
+        'Quality Milestone Tracking'
+      ]
+    }
+  ];
+
+  const getColorClasses = (color: string) => {
+    const colorMap = {
+      blue: {
+        bg: 'bg-blue-500',
+        hover: 'hover:bg-blue-600',
+        text: 'text-blue-600',
+        bgLight: 'bg-blue-50',
+        border: 'border-blue-200'
+      },
+      green: {
+        bg: 'bg-green-500',
+        hover: 'hover:bg-green-600',
+        text: 'text-green-600',
+        bgLight: 'bg-green-50',
+        border: 'border-green-200'
+      },
+      purple: {
+        bg: 'bg-purple-500',
+        hover: 'hover:bg-purple-600',
+        text: 'text-purple-600',
+        bgLight: 'bg-purple-50',
+        border: 'border-purple-200'
+      },
+      red: {
+        bg: 'bg-red-500',
+        hover: 'hover:bg-red-600',
+        text: 'text-red-600',
+        bgLight: 'bg-red-50',
+        border: 'border-red-200'
+      },
+      indigo: {
+        bg: 'bg-indigo-500',
+        hover: 'hover:bg-indigo-600',
+        text: 'text-indigo-600',
+        bgLight: 'bg-indigo-50',
+        border: 'border-indigo-200'
+      },
+      orange: {
+        bg: 'bg-orange-500',
+        hover: 'hover:bg-orange-600',
+        text: 'text-orange-600',
+        bgLight: 'bg-orange-50',
+        border: 'border-orange-200'
+      }
+    };
+    return colorMap[color as keyof typeof colorMap];
   };
 
-  const mainServices = [
-    {
-      title: "End-to-End Clinical Trial Management",
-      icon: "🧪",
-      description: "Comprehensive clinical trial services from Phase I to IV with complete regulatory and operational support",
-      details: [
-        "Phase I–IV Trial Execution",
-        "Site Selection & Monitoring",
-        "Regulatory Submissions",
-        "Data Management & Biostatistics",
-        "Medical Writing & Safety Reporting",
-        "Registry Studies",
-        "BA/BE studies"
-      ],
-      color: "from-blue-500 to-blue-600",
-      hoverColor: "from-blue-600 to-blue-700"
-    }
-  ];
-
-  const additionalServices = [
-    {
-      title: "Additional Services",
-      icon: "🎯",
-      description: "Specialized consulting and support services tailored to your unique research requirements",
-      details: [
-        "Phase Specific Consultancy",
-        "Project Management / Program Management Consultancy",
-        "Feasibility Studies",
-        "Protocol Development",
-        "Pharmacovigilance",
-        "Quality Assurance Audits"
-      ],
-      color: "from-green-500 to-green-600",
-      hoverColor: "from-green-600 to-green-700"
-    }
-  ];
-
-  const allServices = [...mainServices, ...additionalServices];
+  const activeService = services.find(service => service.id === activeTab);
 
   return (
     <div className="pt-16">
@@ -75,7 +176,7 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Services Cards */}
+      {/* Services Tabs Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeInUp} className="text-center mb-16">
@@ -85,68 +186,123 @@ const Services = () => {
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            {allServices.map((service, index) => (
-              <motion.div
-                key={index}
-                {...waveAnimation}
-                transition={{ 
-                  ...waveAnimation.transition, 
-                  delay: index * 0.3,
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 15
-                }}
-                className={`relative bg-gradient-to-br ${service.color} p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 group overflow-hidden`}
-              >
-                {/* Background Pattern */}
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full transform translate-x-16 -translate-y-16"></div>
-                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-white rounded-full transform -translate-x-12 translate-y-12"></div>
-                </div>
+          {/* Service Tabs */}
+          <div className="mb-12">
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              {services.map((service) => {
+                const colors = getColorClasses(service.color);
+                const IconComponent = service.icon;
+                return (
+                  <button
+                    key={service.id}
+                    onClick={() => setActiveTab(service.id)}
+                    className={`flex items-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                      activeTab === service.id
+                        ? `${colors.bg} text-white shadow-lg`
+                        : `bg-white text-gray-700 hover:${colors.bgLight} border ${colors.border}`
+                    }`}
+                  >
+                    <IconComponent className="w-5 h-5 mr-2" />
+                    {service.title}
+                  </button>
+                );
+              })}
+            </div>
 
-                {/* Content */}
-                <div className="relative z-10">
-                  {/* Icon */}
-                  <div className="text-center mb-8">
-                    <div className="text-8xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 transform">
-                      {service.icon}
+            {/* Active Service Content */}
+            {activeService && (
+              <motion.div
+                key={activeService.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white rounded-2xl shadow-xl p-8"
+              >
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
+                  <div>
+                    <div className={`w-16 h-16 ${getColorClasses(activeService.color).bgLight} rounded-xl flex items-center justify-center mb-6`}>
+                      <activeService.icon className={`w-8 h-8 ${getColorClasses(activeService.color).text}`} />
+                    </div>
+                    <h3 className="text-3xl font-bold text-gray-900 mb-4">{activeService.title}</h3>
+                    <p className="text-lg text-gray-600 leading-relaxed mb-6">
+                      {activeService.description}
+                    </p>
+                    <div className="flex items-center text-sm text-gray-500">
+                      <Activity className="w-4 h-4 mr-2" />
+                      <span>GCP Compliant • Global Standards</span>
                     </div>
                   </div>
-
-                  {/* Title */}
-                  <h3 className="text-2xl font-bold text-white mb-4 text-center group-hover:text-yellow-100 transition-colors duration-300">
-                    {service.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-white/90 leading-relaxed text-center mb-8 group-hover:text-white transition-colors duration-300">
-                    {service.description}
-                  </p>
-
-                  {/* Services List */}
-                  <div className="space-y-3">
-                    {service.details.map((detail, detailIndex) => (
-                      <motion.div
-                        key={detailIndex}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: (index * 0.3) + (detailIndex * 0.1) + 0.5, duration: 0.4 }}
-                        className="flex items-center bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300"
-                      >
-                        <div className="w-3 h-3 bg-white rounded-full mr-4 flex-shrink-0 group-hover:bg-yellow-300 transition-colors duration-300"></div>
-                        <span className="text-white font-medium group-hover:text-yellow-100 transition-colors duration-300">
-                          {detail}
-                        </span>
-                      </motion.div>
-                    ))}
+                  
+                  <div>
+                    <h4 className="text-xl font-semibold text-gray-900 mb-6">Service Details</h4>
+                    <div className="space-y-4">
+                      {activeService.details.map((detail, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1, duration: 0.4 }}
+                          className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                        >
+                          <CheckCircle className={`w-5 h-5 ${getColorClasses(activeService.color).text} mr-4 flex-shrink-0`} />
+                          <span className="text-gray-700 font-medium">{detail}</span>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
-
-                  {/* Hover Overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${service.hoverColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`}></div>
                 </div>
               </motion.div>
-            ))}
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Individual Service Cards */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeInUp} className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">All Services Overview</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Explore our complete range of clinical research services
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => {
+              const IconComponent = service.icon;
+              const colors = getColorClasses(service.color);
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                  className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-gray-200"
+                >
+                  <div className={`w-12 h-12 ${colors.bgLight} rounded-lg flex items-center justify-center mb-4`}>
+                    <IconComponent className={`w-6 h-6 ${colors.text}`} />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{service.title}</h3>
+                  <p className="text-gray-600 mb-4 leading-relaxed text-sm">{service.description}</p>
+                  
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-gray-900 text-sm mb-3">Key Services:</h4>
+                    {service.details.slice(0, 4).map((detail, detailIndex) => (
+                      <div key={detailIndex} className="flex items-start">
+                        <div className={`w-2 h-2 rounded-full mr-3 mt-2 flex-shrink-0 ${colors.bg}`}></div>
+                        <span className="text-gray-700 text-sm leading-relaxed">{detail}</span>
+                      </div>
+                    ))}
+                    {service.details.length > 4 && (
+                      <div className="flex items-center mt-2">
+                        <div className={`w-2 h-2 rounded-full mr-3 ${colors.bg}`}></div>
+                        <span className="text-gray-500 text-sm italic">+{service.details.length - 4} more services</span>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
